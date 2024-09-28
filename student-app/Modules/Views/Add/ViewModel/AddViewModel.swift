@@ -14,7 +14,7 @@ final class AddViewModel: ObservableObject {
     private let client: Client
     private let networkManager: NetworkManager
 
-    init(client: Client = Client(), networkManager: NetworkManager = NetworkManager(baseUrl: "http://localhost:3000/students")) {
+    init(client: Client = Client(), networkManager: NetworkManager = NetworkManager(baseUrl: "http://localhost:3000")) {
         self.client = client
         self.networkManager = networkManager
     }

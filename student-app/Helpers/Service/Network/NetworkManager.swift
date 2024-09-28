@@ -8,9 +8,22 @@
 import Foundation
 
 
-enum URLPath: String {
-    case addStudent = "/students/addStudent" // Yeni yol ekleniyor
-    case getAllStudents = "/students/getAllStudent" // Diğer yol
+
+enum URLPath {
+    case addStudent
+    case getAllStudents
+    case deleteStudent(tcNumber: String)
+
+    var rawValue: String {
+        switch self {
+        case .addStudent:
+            return "/students/addStudent"
+        case .getAllStudents:
+            return "/students/getAllStudent"
+        case .deleteStudent(let tcNumber):
+            return "/students/deleteStudent/\(tcNumber)"
+        }
+    }
 }
 
 struct NetworkRequest {
@@ -41,5 +54,6 @@ extension NetworkRequest {
     enum HTTPMethod: String {
         case get = "GET"
         case post = "POST"
+        case delete = "DELETE"
     }
 }

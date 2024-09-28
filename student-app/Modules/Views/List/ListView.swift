@@ -13,25 +13,34 @@ struct ListView: View {
 
     var body: some View {
         NavigationView {
-            List {
-                ForEach(viewModel.students, id: \.tcNumber) { student in
-                    NavigationLink(destination: DetailView(student: student)) {
-                        HStack {
-                            ListCell(name: student.name, lastname: student.lastname, tc_number: String(student.tcNumber))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                    }
-                    .swipeActions {
-                        Button(role: .destructive) {
-                            deleteStudent(student)
-                        } label: {
-                            Label("Sil", systemImage: "trash")
-                        }
-                        
-                        Button {
-                            updateStudent(student)
-                        } label: {
-                            Label("Güncelle", systemImage: "pencil")
+            VStack {
+                if viewModel.students.isEmpty {
+                    Text("Henüz öğrenci yok. Lütfen ekleyin.")
+                        .font(.headline)
+                        .foregroundColor(.gray)
+                        .padding()
+                } else {
+                    List {
+                        ForEach(viewModel.students, id: \.tcNumber) { student in
+                            NavigationLink(destination: DetailView(student: student)) {
+                                HStack {
+                                    ListCell(name: student.name, lastname: student.lastname, tc_number: String(student.tcNumber))
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+                            }
+                            .swipeActions {
+                                Button(role: .destructive) {
+                                    deleteStudent(student)
+                                } label: {
+                                    Label("Sil", systemImage: "trash")
+                                }
+                                
+                                Button {
+                                    updateStudent(student)
+                                } label: {
+                                    Label("Güncelle", systemImage: "pencil")
+                                }
+                            }
                         }
                     }
                 }
@@ -54,11 +63,12 @@ struct ListView: View {
     }
 
     private func deleteStudent(_ student: Student) {
-
+        Task {
+            await viewModel.deleteStudent(tcNumber: String(student.tcNumber))
+        }
     }
 
     private func updateStudent(_ student: Student) {
-
     }
 }
 
