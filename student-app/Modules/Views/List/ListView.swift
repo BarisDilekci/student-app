@@ -7,14 +7,15 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct ListView: View {
     @StateObject private var viewModel = ListViewModel()
+    @State private var isPresentingAddView = false
 
     var body: some View {
         NavigationView {
             List {
                 ForEach(viewModel.students, id: \.tcNumber) { student in
-                    NavigationLink(destination: DetailView(student: student)) { // Student nesnesini geçiyoruz
+                    NavigationLink(destination: DetailView(student: student)) {
                         HStack {
                             ListCell(name: student.name, tc_number: String(student.tcNumber))
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -24,7 +25,7 @@ struct ContentView: View {
             }
             .navigationTitle("Öğrenciler")
             .navigationBarItems(trailing: Button(action: {
-                print("Ekle butonuna basıldı!")
+                isPresentingAddView.toggle()
             }) {
                 Text("Ekle")
             })
@@ -33,10 +34,14 @@ struct ContentView: View {
                     await viewModel.fetchAllStudents()
                 }
             }
+            .sheet(isPresented: $isPresentingAddView) {
+                AddView() 
+            }
         }
     }
 }
 
 #Preview {
-    ContentView()
+    ListView()
 }
+

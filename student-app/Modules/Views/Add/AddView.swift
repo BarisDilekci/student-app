@@ -4,7 +4,6 @@
 //
 //  Created by Barış Dilekçi on 28.09.2024.
 //
-
 import SwiftUI
 
 struct AddView: View {
@@ -14,18 +13,17 @@ struct AddView: View {
     @State private var birthDate: Date = Date()
     @State private var showDatePicker: Bool = false
     @Environment(\.presentationMode) var presentationMode
+    @StateObject private var viewModel = AddViewModel()
 
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("Yeni Öğrenci Ekle")) {
                     TextField("Adı", text: $name)
-                    
                     TextField("Soyadı", text: $lastName)
-                    
                     TextField("TC Numarası", text: $tc_number)
                         .keyboardType(.numberPad)
-                    
+
                     Button(action: {
                         showDatePicker.toggle()
                     }) {
@@ -39,7 +37,7 @@ struct AddView: View {
                         }
                     }
                     .foregroundColor(.blue)
-                    
+
                     if showDatePicker {
                         DatePicker("", selection: $birthDate, displayedComponents: .date)
                             .datePickerStyle(GraphicalDatePickerStyle())
@@ -48,13 +46,20 @@ struct AddView: View {
                 }
                 
                 Button(action: {
-                    print("Yeni öğrenci eklendi: \(name) \(lastName), TC: \(tc_number), Doğum Tarihi: \(birthDate)")
-                    presentationMode.wrappedValue.dismiss()
+                    Task {
+                        await viewModel.addStudent(name: name, lastName: lastName, tcNumber: tc_number, birthDate: birthDate)
+                    }
                 }) {
                     Text("Öğrenci Ekle")
                         .frame(maxWidth: .infinity)
                         .foregroundColor(.black)
                         .cornerRadius(8)
+                }
+                
+                if let errorMessage = viewModel.errorMessage {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
+                        .font(.caption)
                 }
             }
             .navigationTitle("Yeni Öğrenci")
@@ -72,3 +77,4 @@ struct AddView: View {
 #Preview {
     AddView()
 }
+

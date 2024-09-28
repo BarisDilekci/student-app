@@ -15,24 +15,25 @@ final class ListViewModel: ObservableObject {
     private let client: Client
     private let networkManager: NetworkManager
 
-    init(client: Client = Client(), networkManager: NetworkManager = NetworkManager(baseUrl: "http://localhost:3000/students/getAllStudent")) {
+    init(client: Client = Client(), networkManager: NetworkManager = NetworkManager(baseUrl: "http://localhost:3000")) {
         self.client = client
         self.networkManager = networkManager
     }
     
     func fetchAllStudents() async {
-        guard let url = networkManager.baseUrl else { return }
+
+        guard let url = networkManager.buildURL(urlPath: .getAllStudents) else { return }
         var request = URLRequest(url: url)
         request.httpMethod = NetworkRequest.HTTPMethod.get.rawValue
         
         do {
-            // Yanıtı doğrudan [Student] olarak decode et
             let fetchedStudents: [Student] = try await client.fetch(type: [Student].self, with: request)
             students = fetchedStudents
         } catch {
             errorMessage = error.localizedDescription
         }
     }
+
 
 }
 

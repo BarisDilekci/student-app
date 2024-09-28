@@ -9,8 +9,8 @@ import Foundation
 
 
 enum URLPath: String {
-    case turkey = "/api/v2/tr/music/most-played/25/songs.json"
-    case global = "/api/v2/us/music/most-played/25/songs.json"
+    case addStudent = "/students/addStudent" // Yeni yol ekleniyor
+    case getAllStudents = "/students/getAllStudent" // Diğer yol
 }
 
 struct NetworkRequest {
