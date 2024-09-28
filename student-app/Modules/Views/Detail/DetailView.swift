@@ -39,7 +39,7 @@ struct DetailView: View {
                         Text("Doğum Tarihi:")
                             .fontWeight(.bold)
                         Spacer()
-                        Text(formattedDate(student.dateOfBirth)) 
+                        Text(formattedDate(student.dateOfBirth)) // String'den Date'e çevirip formatlıyoruz
                     }
                 }
             }
@@ -50,12 +50,12 @@ struct DetailView: View {
     
     private func formattedDate(_ dateString: String) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ" // Gelen tarih formatı
+        
         if let date = formatter.date(from: dateString) {
-            formatter.dateStyle = .medium
-            return formatter.string(from: date)
+            return date.formattedForDisplay() // Uzantıyı kullan
         }
-        return dateString
+        
+        return dateString // Dönüşüm başarısızsa orijinal string'i döndür
     }
-
 }

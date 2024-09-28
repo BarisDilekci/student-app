@@ -31,7 +31,7 @@ struct AddView: View {
                             Text("Doğum Tarihi: ")
                                 .foregroundStyle(.black)
                             Spacer()
-                            Text("\(formattedDate(birthDate))")
+                            Text(birthDate.formattedForDisplay()) // Kullanıcı dostu tarih formatı
                                 .foregroundStyle(.secondary)
                             Image(systemName: "chevron.down")
                         }
@@ -61,20 +61,21 @@ struct AddView: View {
                         .foregroundColor(.red)
                         .font(.caption)
                 }
+
+                if let successMessage = viewModel.successMessage {
+                    Text(successMessage)
+                        .foregroundColor(.green)
+                        .font(.caption)
+                }
             }
             .navigationTitle("Yeni Öğrenci")
             .navigationBarTitleDisplayMode(.inline)
         }
     }
 
-    private func formattedDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        return formatter.string(from: date)
-    }
+
 }
 
 #Preview {
     AddView()
 }
-
