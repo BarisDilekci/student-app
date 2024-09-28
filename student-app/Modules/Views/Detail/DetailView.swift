@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct DetailView: View {
-    var user: (name: String, lastName: String, tc_number: String, birthDate: Date)
-    
+    var student: Student
+
     var body: some View {
         NavigationView {
             Form {
@@ -18,28 +18,28 @@ struct DetailView: View {
                         Text("Ad:")
                             .fontWeight(.bold)
                         Spacer()
-                        Text(user.name)
+                        Text(student.name)
                     }
                     
                     HStack {
                         Text("Soyad:")
                             .fontWeight(.bold)
                         Spacer()
-                        Text(user.lastName)
+                        Text(student.lastname)
                     }
                     
                     HStack {
                         Text("TC Numarası:")
                             .fontWeight(.bold)
                         Spacer()
-                        Text(user.tc_number)
+                        Text(String(student.tcNumber))
                     }
                     
                     HStack {
                         Text("Doğum Tarihi:")
                             .fontWeight(.bold)
                         Spacer()
-                        Text(formattedDate(user.birthDate))
+                        Text(formattedDate(student.dateOfBirth)) 
                     }
                 }
             }
@@ -47,15 +47,15 @@ struct DetailView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
     }
-
-    // Tarih formatlama fonksiyonu
-    private func formattedDate(_ date: Date) -> String {
+    
+    private func formattedDate(_ dateString: String) -> String {
         let formatter = DateFormatter()
-        formatter.dateStyle = .medium // Tarih stilini orta boyda ayarla
-        return formatter.string(from: date)
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        if let date = formatter.date(from: dateString) {
+            formatter.dateStyle = .medium
+            return formatter.string(from: date)
+        }
+        return dateString
     }
-}
 
-#Preview {
-    DetailView(user: (name: "John", lastName: "Doe", tc_number: "12345678901", birthDate: Date()))
 }
