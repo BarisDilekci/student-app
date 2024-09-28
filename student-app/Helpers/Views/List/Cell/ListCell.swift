@@ -28,10 +28,7 @@ struct ListCell: View {
             
             Spacer()
         }
-        .background(Color(.systemGray6))
-        .cornerRadius(10)
-        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
-        .padding(.horizontal)
+
     }
 }
 
