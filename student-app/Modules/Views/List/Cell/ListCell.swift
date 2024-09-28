@@ -10,15 +10,17 @@ import SwiftUI
 struct ListCell: View {
     
     @State var name: String
+    @State var lastname : String
     @State var tc_number: String
     
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(name)
+                Text("\(name) \(lastname)")
                     .font(.headline)
                     .fontWeight(.bold)
                     .padding(.bottom, 2)
+                
                 
                 Text(tc_number)
                     .font(.subheadline)
@@ -33,6 +35,6 @@ struct ListCell: View {
 }
 
 #Preview {
-    ListCell(name: "John Doe", tc_number: "131312")
+    ListCell(name: "John ", lastname: "Doe", tc_number: "131312")
         .previewLayout(.sizeThatFits)
 }

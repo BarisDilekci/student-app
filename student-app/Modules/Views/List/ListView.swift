@@ -17,8 +17,21 @@ struct ListView: View {
                 ForEach(viewModel.students, id: \.tcNumber) { student in
                     NavigationLink(destination: DetailView(student: student)) {
                         HStack {
-                            ListCell(name: student.name, tc_number: String(student.tcNumber))
+                            ListCell(name: student.name, lastname: student.lastname, tc_number: String(student.tcNumber))
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
+                    .swipeActions {
+                        Button(role: .destructive) {
+                            deleteStudent(student)
+                        } label: {
+                            Label("Sil", systemImage: "trash")
+                        }
+                        
+                        Button {
+                            updateStudent(student)
+                        } label: {
+                            Label("Güncelle", systemImage: "pencil")
                         }
                     }
                 }
@@ -35,13 +48,20 @@ struct ListView: View {
                 }
             }
             .sheet(isPresented: $isPresentingAddView) {
-                AddView() 
+                AddView()
             }
         }
+    }
+
+    private func deleteStudent(_ student: Student) {
+
+    }
+
+    private func updateStudent(_ student: Student) {
+
     }
 }
 
 #Preview {
     ListView()
 }
-
