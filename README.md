@@ -10,6 +10,7 @@ Generic concept, clean code and xctest were emphasized in the project.
 The project is at a very simple level, I will improve it as I learn new information.
 
 Thank you.
+
 ## Screenshots 🖼
 
 <img height="538" alt="Ekran Resmi 2023-03-27 18 36 41" src="https://i.hizliresim.com/h3xt4ax.png"> <img height="538" alt="Ekran Resmi 2023-03-27 18 36 37" src="https://i.hizliresim.com/rt65im2.png"> 
