@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Student: Codable {
+struct Student: Codable, Identifiable {
+    var id: Int { tcNumber }
     let name: String
     let lastname: String
     let tcNumber: Int

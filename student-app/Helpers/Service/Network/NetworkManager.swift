@@ -13,6 +13,7 @@ enum URLPath {
     case addStudent
     case getAllStudents
     case deleteStudent(tcNumber: String)
+    case updateStudent(tcNumber: String)
 
     var rawValue: String {
         switch self {
@@ -22,6 +23,9 @@ enum URLPath {
             return "/students/getAllStudent"
         case .deleteStudent(let tcNumber):
             return "/students/deleteStudent/\(tcNumber)"
+        case .updateStudent(let tcNumber):
+            return "/students/updateStudent/\(tcNumber)"
+                
         }
     }
 }
@@ -55,5 +59,6 @@ extension NetworkRequest {
         case get = "GET"
         case post = "POST"
         case delete = "DELETE"
+        case put = "PUT"
     }
 }

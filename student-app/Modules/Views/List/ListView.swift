@@ -10,6 +10,7 @@ import SwiftUI
 struct ListView: View {
     @StateObject private var viewModel = ListViewModel()
     @State private var isPresentingAddView = false
+    @State private var studentToUpdate: Student?
 
     var body: some View {
         NavigationView {
@@ -21,7 +22,7 @@ struct ListView: View {
                         .padding()
                 } else {
                     List {
-                        ForEach(viewModel.students, id: \.tcNumber) { student in
+                        ForEach(viewModel.students) { student in // Identifiable ile doğrudan kullanabilirsiniz
                             NavigationLink(destination: DetailView(student: student)) {
                                 HStack {
                                     ListCell(name: student.name, lastname: student.lastname, tc_number: String(student.tcNumber))
@@ -59,6 +60,9 @@ struct ListView: View {
             .sheet(isPresented: $isPresentingAddView) {
                 AddView()
             }
+            .sheet(item: $studentToUpdate) { student in
+                UpdateView(student: student)
+            }
         }
     }
 
@@ -69,6 +73,7 @@ struct ListView: View {
     }
 
     private func updateStudent(_ student: Student) {
+        studentToUpdate = student // Güncellenecek öğrenciyi ayarla
     }
 }
 
